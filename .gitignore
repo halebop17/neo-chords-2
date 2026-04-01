@@ -4,5 +4,9 @@
 # MIDI source files (kept local only)
 Files/
 
-# Generated JSON (Lua version is used by the plugin)
+# Generated outputs (Lua version inside NeoChords2.xrnx/ is the real one)
 chord_db.json
+chord_db.lua
+
+# Editor settings
+.vscode/
