@@ -1,0 +1,8 @@
+# Python virtual environment
+.venv/
+
+# MIDI source files (kept local only)
+Files/
+
+# Generated JSON (Lua version is used by the plugin)
+chord_db.json
