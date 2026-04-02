@@ -60,18 +60,91 @@ local state = {
   prog_in_group_idx = 1,
   rand_type         = 1,  -- 1=Recombine, 2=Shuffle
   transpose         = 0,
-  humanize          = 0,  -- 0-100 (%)
+  -- Humanize
+  humanize_timing   = 0,  -- 0-100: random delay scatter (%)
+  humanize_vel      = 0,  -- 0-100: velocity scatter (%)
+  humanize_feel     = 0,  -- 0-100: global player tendency bias (%)
+  -- Chord mode
+  chord_vel_top     = 80, -- velocity for lowest note (root)
+  chord_vel_bot     = 60, -- velocity for highest note (top)
+  chord_length      = 3,  -- note length index: 1=25% 2=50% 3=75% 4=100%
+  -- Play mode
   play_mode         = 1,  -- 1=Chord, 2=Strum, 3=Arp
-  strum_speed       = 10, -- ticks between notes (1=very fast, 60=slow sweep)
-  strum_dir         = 1,  -- 1=up (low→high), 2=down (high→low)
+  strum_speed       = 10, -- ticks between notes
+  strum_dir         = 1,  -- 1=up, 2=down
   arp_step          = 2,  -- index into ARP_STEPS
-  arp_dir           = 1,  -- 1=Up, 2=Down, 3=Up-Down
+  arp_dir           = 1,  -- 1=Up 2=Down 3=Bounce 4=Shuffle 5=PingPong 6=Spiral
+  -- Groove
+  groove_enabled    = false,
+  groove_feel_idx   = 1,
+  groove_in_feel_idx= 1,
+  groove_pattern    = nil,  -- active {onset,dur} pattern or nil
+  groove_rand_desc  = "",   -- description of last generated pattern
   preview           = nil,
   dialog            = nil,
 }
 
-local ARP_STEPS       = { 1, 2, 4, 8 }          -- lines per arp note
+local ARP_STEPS       = { 1, 2, 4, 8 }
 local ARP_STEP_LABELS = { "1/16", "1/8", "1/4", "1/2" }
+local CHORD_LENGTHS   = { 0.25, 0.5, 0.75, 1.0 }
+local CHORD_LEN_LABELS= { "25%", "50%", "75%", "100%" }
+
+-- ─── Groove Presets ──────────────────────────────────────────────────────────────────
+-- Each pattern entry: {onset=<beats>, dur=<beats>}
+-- Patterns cycle through staged chords. 4 bars @ 4/4 = 16 beats total.
+local GROOVE_PRESETS = {
+  -- ─ Straight: on-beat, predictable placement ─────────────────────────────
+  { name="Block",       feel="Straight",
+    pattern={{onset=0,dur=4},{onset=4,dur=4},{onset=8,dur=4},{onset=12,dur=4}} },
+  { name="Standard",    feel="Straight",
+    pattern={{onset=0,dur=2},{onset=2,dur=2},{onset=4,dur=2},{onset=6,dur=2},
+             {onset=8,dur=2},{onset=10,dur=2},{onset=12,dur=2},{onset=14,dur=2}} },
+  { name="Quick pairs", feel="Straight",
+    pattern={{onset=0,dur=1},{onset=1,dur=1},{onset=4,dur=1},{onset=5,dur=1},
+             {onset=8,dur=1},{onset=9,dur=1},{onset=12,dur=1},{onset=13,dur=1}} },
+  { name="Long-short",  feel="Straight",
+    pattern={{onset=0,dur=3},{onset=3,dur=1},{onset=4,dur=3},{onset=7,dur=1},
+             {onset=8,dur=3},{onset=11,dur=1},{onset=12,dur=3},{onset=15,dur=1}} },
+  -- ─ Moderate: some anticipation / uneven spacing ────────────────────────
+  { name="End push",    feel="Moderate",
+    pattern={{onset=0,dur=2},{onset=2,dur=2},{onset=4,dur=2},{onset=5.5,dur=2.5},
+             {onset=8,dur=2},{onset=10,dur=2},{onset=12,dur=2},{onset=13.5,dur=2.5}} },
+  { name="Light swing", feel="Moderate",
+    pattern={{onset=0,dur=1.75},{onset=1.75,dur=2.25},{onset=4,dur=1.75},{onset=5.75,dur=2.25},
+             {onset=8,dur=1.75},{onset=9.75,dur=2.25},{onset=12,dur=1.75},{onset=13.75,dur=2.25}} },
+  { name="Half push",   feel="Moderate",
+    pattern={{onset=0,dur=2},{onset=2.5,dur=1.5},{onset=4,dur=2},{onset=6.5,dur=1.5},
+             {onset=8,dur=2},{onset=10.5,dur=1.5},{onset=12,dur=2},{onset=14.5,dur=1.5}} },
+  { name="Asymmetric",  feel="Moderate",
+    pattern={{onset=0,dur=3},{onset=3,dur=1},{onset=4,dur=4},
+             {onset=8,dur=3},{onset=11,dur=1},{onset=12,dur=4}} },
+  -- ─ Syncopated: mostly off-beat / pushed chords ────────────────────────
+  { name="Charleston",  feel="Syncopated",
+    pattern={{onset=0,dur=1.5},{onset=1.5,dur=2.5},{onset=4,dur=1.5},{onset=5.5,dur=2.5},
+             {onset=8,dur=1.5},{onset=9.5,dur=2.5},{onset=12,dur=1.5},{onset=13.5,dur=2.5}} },
+  { name="Off-beat",    feel="Syncopated",
+    pattern={{onset=0.5,dur=1.5},{onset=2,dur=2},{onset=4.5,dur=1.5},{onset=6,dur=2},
+             {onset=8.5,dur=1.5},{onset=10,dur=2},{onset=12.5,dur=1.5},{onset=14,dur=2}} },
+  { name="Neo push",    feel="Syncopated",
+    pattern={{onset=0,dur=3.5},{onset=3.5,dur=0.5},{onset=4,dur=3.5},{onset=7.5,dur=0.5},
+             {onset=8,dur=3.5},{onset=11.5,dur=0.5},{onset=12,dur=3.5},{onset=15.5,dur=0.5}} },
+  { name="Funk",        feel="Syncopated",
+    pattern={{onset=0,dur=1.5},{onset=1.5,dur=1},{onset=3,dur=1},{onset=4,dur=1.5},
+             {onset=5.5,dur=0.5},{onset=6,dur=2},{onset=8,dur=1.5},{onset=9.5,dur=2.5}} },
+}
+
+-- Build feel groups
+local groove_groups   = {}
+local _gfeel_order    = { "Straight", "Moderate", "Syncopated" }
+local _gfeel_map      = {}
+for _, feel in ipairs(_gfeel_order) do
+  groove_groups[#groove_groups + 1] = { feel = feel, presets = {} }
+  _gfeel_map[feel] = #groove_groups
+end
+for i, g in ipairs(GROOVE_PRESETS) do
+  local grp = groove_groups[_gfeel_map[g.feel]]
+  if grp then grp.presets[#grp.presets + 1] = i end
+end
 
 -- ─── Helpers ─────────────────────────────────────────────────────────────────
 
@@ -139,12 +212,132 @@ local function randomize_shuffle()
   return chords
 end
 
+-- ─── Groove Generator ───────────────────────────────────────────────────────
+-- Produces a novel constrained rhythm pattern from musical rules.
+-- feel: "Straight", "Moderate", or "Syncopated"
+local function generate_groove(feel)
+  local GRID    = 0.25      -- 16th-note step
+  local BARS    = 4         -- always 4 bars
+  local BAR_LEN = 4.0       -- beats per bar
+  local TOTAL   = BARS * BAR_LEN  -- 16 beats
+  local MIN_DUR = 0.5       -- shortest chord (8th note)
+  local MIN_GAP = 1.0       -- minimum beats between changes
+  local MAX_CHORDS = 8
+
+  -- Candidate onset pools by feel
+  local pools = {
+    Straight    = { 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15 },
+    Moderate    = { 0,0.5,1,1.5,2,2.5,3,3.5,4,4.5,5,5.5,6,6.5,7,7.5,
+                    8,8.5,9,9.5,10,10.5,11,11.5,12,12.5,13,13.5,14,14.5,15,15.5 },
+    Syncopated  = {},
+  }
+  -- Syncopated: all 16th positions, double-weight classic offbeats
+  for i = 0, 63 do
+    local b = i * GRID
+    if b < TOTAL then
+      pools.Syncopated[#pools.Syncopated + 1] = b
+      local rel = b % BAR_LEN
+      if rel == 0.5 or rel == 1.5 or rel == 2.5 or rel == 3.5 then
+        pools.Syncopated[#pools.Syncopated + 1] = b
+      end
+    end
+  end
+
+  local pool = pools[feel] or pools.Straight
+
+  local function valid_onset(onset, existing)
+    for _, e in ipairs(existing) do
+      if math.abs(onset - e) < MIN_GAP then return false end
+    end
+    return true
+  end
+
+  -- Single attempt: returns a valid pattern or nil
+  local function try_generate()
+    local onsets = { 0 }
+    local shuffled = {}
+    for _, v in ipairs(pool) do shuffled[#shuffled + 1] = v end
+    for i = #shuffled, 2, -1 do
+      local j = math.random(i)
+      shuffled[i], shuffled[j] = shuffled[j], shuffled[i]
+    end
+    for _, onset in ipairs(shuffled) do
+      if onset > 0 and valid_onset(onset, onsets) then
+        onsets[#onsets + 1] = onset
+        if #onsets >= MAX_CHORDS then break end
+      end
+    end
+    if #onsets < 2 then return nil end
+    table.sort(onsets)
+
+    -- Check: at least one onset near a bar boundary
+    local has_bar_hit = false
+    for _, o in ipairs(onsets) do
+      if o % BAR_LEN < GRID * 1.5 then has_bar_hit = true; break end
+    end
+    if not has_bar_hit then return nil end
+
+    -- Build slots
+    local slots = {}
+    local dur_set = {}
+    for i, onset in ipairs(onsets) do
+      local next_onset = (i < #onsets) and onsets[i + 1] or TOTAL
+      local dur = math.max(MIN_DUR, next_onset - onset)
+      dur = math.floor(dur / GRID + 0.5) * GRID
+      slots[#slots + 1] = { onset = onset, dur = dur }
+      dur_set[dur] = true
+    end
+
+    -- Check: at least 2 different duration values
+    local n_durs = 0
+    for _ in pairs(dur_set) do n_durs = n_durs + 1 end
+    if n_durs < 2 then return nil end
+
+    return slots
+  end
+
+  local pattern
+  for _ = 1, 200 do
+    pattern = try_generate()
+    if pattern then break end
+  end
+
+  -- Fallback: Standard 8-chord pattern
+  if not pattern then
+    pattern = {}
+    for i = 0, 7 do
+      pattern[#pattern + 1] = { onset = i * 2, dur = 2 }
+    end
+  end
+  return pattern
+end
+
+-- ─── Groove Applicator ──────────────────────────────────────────────────────────────────
+
+local function apply_groove(chords, pattern)
+  if not chords or not pattern or #pattern == 0 then return chords end
+  local pat_len = pattern[#pattern].onset + pattern[#pattern].dur
+  local result  = {}
+  for i, chord in ipairs(chords) do
+    local slot_idx = ((i - 1) % #pattern) + 1
+    local cycle    = math.floor((i - 1) / #pattern)
+    local slot     = pattern[slot_idx]
+    local nc       = copy_chord(chord)
+    nc.onset       = slot.onset + cycle * pat_len
+    nc.duration    = slot.dur
+    result[#result + 1] = nc
+  end
+  return result
+end
+
 -- ─── Phrase Writer ───────────────────────────────────────────────────────────
 
 local LPB = 8
 
-local function write_to_phrase(chords, transpose_st, humanize_pct, play_mode,
-                               strum_speed, strum_dir, arp_step_lines, arp_dir)
+local function write_to_phrase(chords, st, hu_timing, hu_vel, hu_feel,
+                               chord_vel_top, chord_vel_bot, chord_len_frac,
+                               play_mode, strum_speed, strum_dir,
+                               arp_step_lines, arp_dir)
   if not chords or #chords == 0 then
     renoise.app():show_warning("No progression staged. Browse or Randomize first.")
     return
@@ -155,96 +348,140 @@ local function write_to_phrase(chords, transpose_st, humanize_pct, play_mode,
     return
   end
 
-  local last = chords[#chords]
-  local total_lines = clamp(math.ceil((last.onset + last.duration) * LPB), 16, 512)
-  local max_notes = 0
+  local last       = chords[#chords]
+  local total_lines= clamp(math.ceil((last.onset + last.duration) * LPB), 16, 512)
+  local max_notes  = 0
   for _, c in ipairs(chords) do max_notes = math.max(max_notes, #c.notes) end
   max_notes = clamp(max_notes, 2, 12)
 
   local idx = #instrument.phrases + 1
   instrument:insert_phrase_at(idx)
   local phrase = instrument.phrases[idx]
-  phrase.name = string.format("Neo Chords %d", idx)
-  phrase.number_of_lines = total_lines
-  phrase.lpb = LPB
-  phrase.looping = true
-  phrase.visible_note_columns = max_notes
+  phrase.name                  = string.format("Neo Chords %d", idx)
+  phrase.number_of_lines       = total_lines
+  phrase.lpb                   = LPB
+  phrase.looping               = true
+  phrase.visible_note_columns  = max_notes
+  phrase.volume_column_visible = true
 
-  local ts      = clamp(transpose_st, -48, 48)
-  local max_hum = math.floor(humanize_pct / 100 * 15)
-  local spd     = clamp(strum_speed, 1, 120)
+  local ts          = clamp(st, -48, 48)
+  local max_scatter = math.floor(hu_timing / 100 * 15)     -- max tick scatter
+  local vel_scatter = math.floor(hu_vel    / 100 * 20)     -- max vel scatter ±
+  local feel_bias   = math.floor(hu_feel   / 100 * 8)      -- global lean ticks
+  local spd         = clamp(strum_speed, 1, 120)
 
-  -- Enable delay column for chord/strum modes when needed
-  phrase.delay_column_visible = (play_mode ~= 3) and (play_mode == 2 or max_hum > 0)
+  -- Per-phrase random feel direction (-1 drag, +1 rush)
+  local feel_sign = (math.random(2) == 1) and 1 or -1
+
+  -- Velocity taper helper: col 1 = root (loudest), last col = top (softest)
+  local function note_velocity(col_idx, total_cols)
+    if total_cols <= 1 then return chord_vel_top end
+    local t = (col_idx - 1) / (total_cols - 1)  -- 0..1 from root to top
+    local base = math.floor(chord_vel_top + t * (chord_vel_bot - chord_vel_top) + 0.5)
+    if vel_scatter > 0 then
+      base = base + math.random(-vel_scatter, vel_scatter)
+    end
+    return clamp(base, 1, 127)
+  end
+
+  -- Arp sequence builder
+  local function build_arp_seq(sorted, dir)
+    local n   = #sorted
+    local seq = {}
+    if dir == 1 then          -- Up
+      for i = 1, n do seq[#seq+1] = sorted[i] end
+    elseif dir == 2 then      -- Down
+      for i = n, 1, -1 do seq[#seq+1] = sorted[i] end
+    elseif dir == 3 then      -- Bounce (no repeat at ends)
+      for i = 1, n do seq[#seq+1] = sorted[i] end
+      for i = n-1, 2, -1 do seq[#seq+1] = sorted[i] end
+    elseif dir == 4 then      -- Shuffle
+      for i = 1, n do seq[#seq+1] = sorted[i] end
+      shuffle(seq)
+    elseif dir == 5 then      -- PingPong (repeat top+bottom)
+      for i = 1, n do seq[#seq+1] = sorted[i] end
+      for i = n, 1, -1 do seq[#seq+1] = sorted[i] end
+    elseif dir == 6 then      -- Spiral (outside→inside)
+      local lo, hi = 1, n
+      while lo <= hi do
+        seq[#seq+1] = sorted[lo];  lo = lo + 1
+        if lo <= hi then
+          seq[#seq+1] = sorted[hi]; hi = hi - 1
+        end
+      end
+    end
+    if #seq == 0 then seq = { sorted[1] or 60 } end
+    return seq
+  end
+
+  phrase.delay_column_visible = (play_mode ~= 3) and
+    (play_mode == 2 or max_scatter > 0 or feel_bias > 0)
 
   if play_mode == 3 then
-    -- ── ARP mode: spread notes across lines ────────────────────────────────
+    -- ── ARP ──────────────────────────────────────────────────────────────────
     phrase.visible_note_columns = 1
     local step = clamp(arp_step_lines, 1, 8)
-
     for _, chord in ipairs(chords) do
-      local note_count   = math.min(#chord.notes, max_notes)
-      local chord_lines  = math.floor(chord.duration * LPB)  -- lines this chord occupies
-      local base_li      = clamp(math.floor(chord.onset * LPB) + 1, 1, total_lines)
-
-      -- Build the arp sequence from sorted notes
-      local sorted = {}
+      local note_count  = math.min(#chord.notes, max_notes)
+      local chord_lines = math.floor(chord.duration * LPB)
+      local base_li     = clamp(math.floor(chord.onset * LPB) + 1, 1, total_lines)
+      local sorted      = {}
       for i = 1, note_count do sorted[i] = chord.notes[i] end
-      -- sorted is already low→high from parser
-
-      -- Build directional sequence
-      local seq = {}
-      if arp_dir == 1 then          -- Up
-        for i = 1, note_count do seq[#seq + 1] = sorted[i] end
-      elseif arp_dir == 2 then      -- Down
-        for i = note_count, 1, -1 do seq[#seq + 1] = sorted[i] end
-      else                          -- Up-Down (bounce, no repeated top/bottom)
-        for i = 1, note_count do seq[#seq + 1] = sorted[i] end
-        for i = note_count - 1, 2, -1 do seq[#seq + 1] = sorted[i] end
-      end
-
-      if #seq == 0 then seq = { chord.notes[1] } end
-
-      -- Fill lines within the chord's duration with cycling arp notes
+      local seq   = build_arp_seq(sorted, arp_dir)
       local seq_i = 1
       local li    = base_li
       while li <= math.min(base_li + chord_lines - 1, total_lines) do
         local col = phrase.lines[li].note_columns[1]
-        col.note_value = clamp(seq[seq_i] + ts, 0, 119)
+        col.note_value   = clamp(seq[seq_i] + ts, 0, 119)
+        col.volume_value = note_velocity(1, 1)
         seq_i = (seq_i % #seq) + 1
-        li = li + step
+        li    = li + step
       end
     end
 
   else
-    -- ── Chord / Strum mode ─────────────────────────────────────────────────
+    -- ── CHORD / STRUM ─────────────────────────────────────────────────────────
     for _, chord in ipairs(chords) do
-      local li   = clamp(math.floor(chord.onset * LPB) + 1, 1, total_lines)
-      local line = phrase.lines[li]
-      local note_count = math.min(#chord.notes, max_notes)
+      local note_count  = math.min(#chord.notes, max_notes)
+      local chord_lines = math.max(1, math.floor(chord.duration * LPB * chord_len_frac))
+      local base_li     = clamp(math.floor(chord.onset * LPB) + 1, 1, total_lines)
 
+      -- Build note order
       local order = {}
       if play_mode == 2 and strum_dir == 2 then
-        for i = note_count, 1, -1 do order[#order + 1] = i end
+        for i = note_count, 1, -1 do order[#order+1] = i end
       else
-        for i = 1, note_count do order[#order + 1] = i end
+        for i = 1, note_count do order[#order+1] = i end
       end
 
       for step_i, ci in ipairs(order) do
-        local col = line.note_columns[ci]
-        col.note_value = clamp(chord.notes[ci] + ts, 0, 119)
-        local delay = 0
+        local col = phrase.lines[base_li].note_columns[ci]
+        col.note_value   = clamp(chord.notes[ci] + ts, 0, 119)
+        col.volume_value = note_velocity(ci, note_count)
+
+        local delay = feel_sign * feel_bias
         if play_mode == 2 then delay = delay + (step_i - 1) * spd end
-        if max_hum > 0   then delay = delay + math.random(0, max_hum) end
+        if max_scatter > 0 then delay = delay + math.random(0, max_scatter) end
         col.delay_value = clamp(delay, 0, 255)
+
+        -- Write note-off at end of length (only if < 100%)
+        if chord_len_frac < 1.0 then
+          local off_li = clamp(base_li + chord_lines, 1, total_lines)
+          if off_li ~= base_li then
+            local off_col = phrase.lines[off_li].note_columns[ci]
+            if off_col.note_value == renoise.PatternLine.EMPTY_NOTE then
+              off_col.note_value = renoise.PatternLine.NOTE_OFF
+            end
+          end
+        end
       end
     end
   end
 
   local mode_info = ({ "chord", "strum", "arp" })[play_mode] or "?"
   renoise.app():show_status(string.format(
-    "Neo Chords 2: wrote %d chords → phrase #%d  |  tr %+d  |  hu %d%%  |  %s",
-    #chords, idx, ts, humanize_pct, mode_info))
+    "Neo Chords 2: wrote %d chords → phrase #%d  |  tr %+d  |  %s",
+    #chords, idx, ts, mode_info))
 end
 
 -- ─── UI ──────────────────────────────────────────────────────────────────────
@@ -345,28 +582,181 @@ local function show_dialog()
   }
   local tr_slider = vb:slider {
     min = -24, max = 24, value = state.transpose,
-    width    = W - LW - 36,
+    width    = W - LW - 36 - 48,
     notifier = function(v)
       state.transpose = math.floor(v + 0.5)
       tr_label.text = string.format("Transpose: %+d st", state.transpose)
     end,
   }
+  local function tr_update(new_v)
+    new_v = math.max(-24, math.min(24, new_v))
+    state.transpose = new_v; tr_slider.value = new_v
+    tr_label.text = string.format("Transpose: %+d st", new_v)
+  end
 
   -- ── Humanize ──────────────────────────────────────────────────────────────
-  local hu_label = vb:text {
-    text  = string.format("Humanize:  %d%%", state.humanize),
-    width = LW,
-  }
-  local hu_slider = vb:slider {
-    min = 0, max = 100, value = state.humanize,
-    width    = W - LW - 36,
+  local function hu_row(label_str, state_key, w_slider)
+    local lbl = vb:text { text = label_str, width = LW }
+    local sld = vb:slider {
+      min = 0, max = 100, value = state[state_key],
+      width = w_slider,
+      notifier = function(v)
+        state[state_key] = math.floor(v + 0.5)
+        lbl.text = string.format("%s %d%%", label_str:match("^[^:]+"), state[state_key])
+      end,
+    }
+    local function upd(new_v)
+      new_v = math.max(0, math.min(100, new_v))
+      state[state_key] = new_v; sld.value = new_v
+      lbl.text = string.format("%s %d%%", label_str:match("^[^:]+"), new_v)
+    end
+    local btn_l = vb:button {
+      text = "◄", width = 20,
+      notifier = function() upd(state[state_key] - 1) end,
+    }
+    local btn_r = vb:button {
+      text = "►", width = 20,
+      notifier = function() upd(state[state_key] + 1) end,
+    }
+    local btn = vb:button {
+      text = "0", width = 26,
+      notifier = function() upd(0); lbl.text = label_str end,
+    }
+    return vb:row { spacing = 4, lbl, btn_l, sld, btn_r, btn }, sld
+  end
+  local hu_timing_row = hu_row("Timing:  0%", "humanize_timing", W - LW - 36 - 48)
+  local hu_vel_row    = hu_row("Velocity: 0%", "humanize_vel",    W - LW - 36 - 48)
+  local hu_feel_row   = hu_row("Feel:    0%", "humanize_feel",   W - LW - 36 - 48)
+  -- ── Groove section ──────────────────────────────────────────────────────────────────
+  local groove_feel_items = {}
+  for _, grp in ipairs(groove_groups) do
+    groove_feel_items[#groove_feel_items + 1] =
+      string.format("%s (%d)", grp.feel, #grp.presets)
+  end
+
+  local function groove_items_for_feel(fi)
+    local grp   = groove_groups[fi]
+    local items = {}
+    if grp then
+      for i, pidx in ipairs(grp.presets) do
+        items[#items + 1] = string.format("%d. %s", i, GROOVE_PRESETS[pidx].name)
+      end
+    end
+    return items
+  end
+
+  local groove_preset_popup  -- forward declare
+
+  local groove_feel_popup = vb:popup {
+    items    = groove_feel_items,
+    value    = state.groove_feel_idx,
+    width    = W - 20,
     notifier = function(v)
-      state.humanize = math.floor(v + 0.5)
-      hu_label.text = string.format("Humanize:  %d%%", state.humanize)
+      state.groove_feel_idx     = v
+      state.groove_in_feel_idx  = 1
+      local grp = groove_groups[v]
+      if grp and #grp.presets > 0 then
+        state.groove_pattern = GROOVE_PRESETS[grp.presets[1]].pattern
+      end
+      -- Update preset dropdown in-place (no dialog rebuild needed)
+      groove_preset_popup.items = groove_items_for_feel(v)
+      groove_preset_popup.value = 1
     end,
   }
 
+  local gi_items = groove_items_for_feel(state.groove_feel_idx)
+  groove_preset_popup = vb:popup {
+    items    = gi_items,
+    value    = clamp(state.groove_in_feel_idx, 1, math.max(1, #gi_items)),
+    width    = W - 20,
+    notifier = function(v)
+      state.groove_in_feel_idx = v
+      local grp = groove_groups[state.groove_feel_idx]
+      if grp and grp.presets[v] then
+        state.groove_pattern = GROOVE_PRESETS[grp.presets[v]].pattern
+      end
+    end,
+  }
+
+  local groove_rand_label = vb:text {
+    text  = (state.groove_rand_desc ~= "") and state.groove_rand_desc or "Press Generate for a new rhythm",
+    width = W - 20,
+  }
+  local groove_gen_btn = vb:button {
+    text  = "Generate Random Groove",
+    width = W - 20,
+    notifier = function()
+      local feel_names = { "Straight", "Moderate", "Syncopated" }
+      local feel = feel_names[state.groove_feel_idx] or "Straight"
+      local pat  = generate_groove(feel)
+      state.groove_pattern  = pat
+      state.groove_rand_desc = string.format(
+        "Generated [%s]  %d chords  %.1f–%.1f beat slots",
+        feel, #pat,
+        pat[1].dur,
+        pat[#pat].dur)
+      groove_rand_label.text = state.groove_rand_desc
+    end,
+  }
+
+  local groove_browse_section = vb:column {
+    spacing = 4,
+    groove_feel_popup,
+    groove_preset_popup,
+    vb:space { height = 4 },
+    groove_gen_btn,
+    groove_rand_label,
+  }
+  local groove_enable_switch = vb:switch {
+    items    = { "Off", "On" },
+    value    = state.groove_enabled and 2 or 1,
+    width    = W - 20,
+    notifier = function(v)
+      state.groove_enabled = (v == 2)
+      if not state.groove_enabled then
+        state.groove_pattern = nil
+      else
+        local grp = groove_groups[state.groove_feel_idx]
+        if grp and grp.presets[state.groove_in_feel_idx] then
+          state.groove_pattern = GROOVE_PRESETS[grp.presets[state.groove_in_feel_idx]].pattern
+        end
+      end
+      show_dialog()
+    end,
+  }
   -- ── Play mode + sub-controls ──────────────────────────────────────────────
+  -- Chord sub-controls
+  local cv_top_label = vb:text { text = string.format("Root vel: %d", state.chord_vel_top), width = LW }
+  local cv_top_sld   = vb:slider {
+    min = 1, max = 127, value = state.chord_vel_top,
+    width = W - LW - 36,
+    notifier = function(v)
+      state.chord_vel_top = math.floor(v + 0.5)
+      cv_top_label.text = string.format("Root vel: %d", state.chord_vel_top)
+    end,
+  }
+  local cv_bot_label = vb:text { text = string.format("Top vel:  %d", state.chord_vel_bot), width = LW }
+  local cv_bot_sld   = vb:slider {
+    min = 1, max = 127, value = state.chord_vel_bot,
+    width = W - LW - 36,
+    notifier = function(v)
+      state.chord_vel_bot = math.floor(v + 0.5)
+      cv_bot_label.text = string.format("Top vel:  %d", state.chord_vel_bot)
+    end,
+  }
+  local chord_len_popup = vb:popup {
+    items    = CHORD_LEN_LABELS,
+    value    = state.chord_length,
+    width    = 80,
+    notifier = function(v) state.chord_length = v end,
+  }
+  local chord_section = vb:column {
+    spacing = 4,
+    vb:row { spacing = 4, cv_top_label, cv_top_sld },
+    vb:row { spacing = 4, cv_bot_label, cv_bot_sld },
+    vb:row { spacing = 6, vb:text { text = "Length:", width = LW }, chord_len_popup },
+  }
+
   -- Strum sub-controls
   local strum_speed_label = vb:text {
     text  = string.format("Speed: %d tk", state.strum_speed),
@@ -375,7 +765,6 @@ local function show_dialog()
   local strum_speed_slider = vb:slider {
     min = 1, max = 60, value = state.strum_speed,
     width    = W - 72 - 36,
-    active   = (state.play_mode == 2),
     notifier = function(v)
       state.strum_speed = math.floor(v + 0.5)
       strum_speed_label.text = string.format("Speed: %d tk", state.strum_speed)
@@ -385,12 +774,12 @@ local function show_dialog()
     items    = { "↑ Up", "↓ Down" },
     value    = state.strum_dir,
     width    = W - 20,
-    active   = (state.play_mode == 2),
     notifier = function(v) state.strum_dir = v end,
   }
   local strum_section = vb:column {
     spacing = 4,
     vb:row { spacing = 4, strum_speed_label, strum_speed_slider },
+    vb:space { height = 8 },
     strum_dir_switch,
   }
 
@@ -399,14 +788,12 @@ local function show_dialog()
     items    = ARP_STEP_LABELS,
     value    = state.arp_step,
     width    = 80,
-    active   = (state.play_mode == 3),
     notifier = function(v) state.arp_step = v end,
   }
   local arp_dir_switch = vb:switch {
-    items    = { "↑ Up", "↓ Down", "↑↓ Bounce" },
+    items    = { "↑ Up", "↓ Down", "↑↓ Bounce", "↕ Shuffle", "⟳ PingPong", "⊛ Spiral" },
     value    = state.arp_dir,
     width    = W - 20,
-    active   = (state.play_mode == 3),
     notifier = function(v) state.arp_dir = v end,
   }
   local arp_section = vb:column {
@@ -416,22 +803,22 @@ local function show_dialog()
       vb:text { text = "Step:", width = 36 },
       arp_step_popup,
     },
+    vb:space { height = 8 },
     arp_dir_switch,
   }
 
-  -- Play mode switch — shows/hides sub-sections via active flag
+  -- Play mode switch — rebuilds dialog to show only relevant controls
   local play_mode_switch = vb:switch {
     items    = { "Chord", "Strum", "Arp" },
     value    = state.play_mode,
     width    = W - 20,
     notifier = function(v)
       state.play_mode = v
-      local is_strum = (v == 2)
-      local is_arp   = (v == 3)
-      strum_speed_slider.active = is_strum
-      strum_dir_switch.active   = is_strum
-      arp_step_popup.active     = is_arp
-      arp_dir_switch.active     = is_arp
+      if v ~= 1 then
+        state.groove_enabled = false
+        state.groove_pattern  = nil
+      end
+      show_dialog()
     end,
   }
 
@@ -464,45 +851,50 @@ local function show_dialog()
 
     vb:row {
       spacing = 4,
-      tr_label, tr_slider,
-      vb:button {
-        text = "0", width = 26,
-        notifier = function()
-          state.transpose = 0; tr_slider.value = 0
-          tr_label.text = "Transpose:  0 st"
-        end,
-      },
+      tr_label,
+      vb:button { text = "◄", width = 20, notifier = function() tr_update(state.transpose - 1) end },
+      tr_slider,
+      vb:button { text = "►", width = 20, notifier = function() tr_update(state.transpose + 1) end },
+      vb:button { text = "0", width = 26, notifier = function() tr_update(0) end },
     },
-    vb:row {
-      spacing = 4,
-      hu_label, hu_slider,
-      vb:button {
-        text = "0", width = 26,
-        notifier = function()
-          state.humanize = 0; hu_slider.value = 0
-          hu_label.text = "Humanize:   0%"
-        end,
-      },
-    },
+    vb:text { text = "HUMANIZE", font = "bold" },
+    hu_timing_row,
+    hu_vel_row,
+    hu_feel_row,
 
+    vb:space { height = 10 },
     -- Play mode
     vb:text { text = "PLAY MODE", font = "bold" },
     play_mode_switch,
-    strum_section,
-    arp_section,
+    (state.play_mode == 1) and chord_section or nil,
+    (state.play_mode == 2) and strum_section  or nil,
+    (state.play_mode == 3) and arp_section    or nil,
+
+    -- Groove (Chord mode only)
+    (state.play_mode == 1) and vb:space { height = 6 }   or nil,
+    (state.play_mode == 1) and vb:text { text = "GROOVE", font = "bold" } or nil,
+    (state.play_mode == 1) and groove_enable_switch or nil,
+    (state.play_mode == 1 and state.groove_enabled) and groove_browse_section or nil,
 
     vb:space { height = 2 },
     vb:button {
       text     = "Write to Phrase",
       width    = W - 20,
       notifier = function()
-        write_to_phrase(state.preview, state.transpose, state.humanize,
+        local chords_out = state.preview
+        if state.groove_enabled and state.groove_pattern and chords_out then
+          chords_out = apply_groove(chords_out, state.groove_pattern)
+        end
+        write_to_phrase(chords_out, state.transpose,
+                        state.humanize_timing, state.humanize_vel, state.humanize_feel,
+                        state.chord_vel_top, state.chord_vel_bot,
+                        CHORD_LENGTHS[state.chord_length],
                         state.play_mode,
                         state.strum_speed, state.strum_dir,
                         ARP_STEPS[state.arp_step], state.arp_dir)
         status_text.text = string.format(
-          "Written (tr %+d, hu %d%%). Progression still staged — change transpose and write again.",
-          state.transpose, state.humanize)
+          "Written (tr %+d, t%d%% v%d%% f%d%%). Staged — change settings and write again.",
+          state.transpose, state.humanize_timing, state.humanize_vel, state.humanize_feel)
       end,
     },
     status_text,

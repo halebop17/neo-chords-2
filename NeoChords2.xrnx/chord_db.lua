@@ -2,6 +2,7 @@
 -- Generated from: neo soul vol 1
 -- Total progressions: 100
 -- Total unique chords: 81
+-- Total unique grooves: 1
 
 CHORD_DB = {
   version = 1,
@@ -1691,6 +1692,14 @@ CHORD_DB = {
     {notes = {56, 60, 63, 67, 77}, label = "Fm9", count = 1},
     {notes = {49, 53, 56, 60, 70}, label = "Bbm9", count = 1},
     {notes = {51, 55, 58, 62, 72}, label = "Cm9", count = 1},
+  },
+
+  groove_pool = {
+    {feel = "Straight", density = 2.0, count = 100, pattern = {{onset = 0.0, duration = 2.0}, {onset = 2.0, duration = 2.0}, {onset = 4.0, duration = 2.0}, {onset = 6.0, duration = 2.0}, {onset = 8.0, duration = 2.0}, {onset = 10.0, duration = 2.0}, {onset = 12.0, duration = 2.0}, {onset = 14.0, duration = 2.0}}},
+  },
+
+  groove_groups = {
+    {feel = "Straight", indices = {1}},
   },
 
 }
