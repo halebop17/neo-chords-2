@@ -225,6 +225,93 @@ def parse_midi_file(path: Path) -> dict | None:
     }
 
 
+# ─── Build groove pool ──────────────────────────────────────────────────────
+
+def build_groove_pool(progressions: list[dict]) -> tuple[list[dict], list[dict]]:
+    """
+    Extract rhythm templates from progressions.
+    Returns (groove_pool, groove_groups).
+    Each groove: {feel, density, pattern=[{onset,duration},...], count, source_name}
+    Each group:  {feel, indices=[...]} — indices into groove_pool.
+    """
+    SIXTEENTH = 0.0625  # 1/16 note in beats
+
+    def quantize(onset: float) -> float:
+        return round(onset / SIXTEENTH) * SIXTEENTH
+
+    def pattern_key(chords: list[dict]) -> tuple:
+        return tuple(quantize(c["onset"]) for c in chords)
+
+    def syncopation_score(chords: list[dict], bar_len: float) -> float:
+        """Fraction of onsets NOT landing within 0.1 beats of any integer beat."""
+        off_beat = 0
+        for c in chords:
+            rel = c["onset"] % bar_len
+            nearest_beat = round(rel)
+            if abs(rel - nearest_beat) > 0.1:
+                off_beat += 1
+        return off_beat / len(chords) if chords else 0.0
+
+    def feel_label(synco: float) -> str:
+        if synco < 0.25:
+            return "Straight"
+        elif synco < 0.6:
+            return "Moderate"
+        else:
+            return "Syncopated"
+
+    seen: dict[tuple, dict] = {}  # pattern_key -> groove entry
+
+    for prog in progressions:
+        chords = prog["chords"]
+        if not chords:
+            continue
+        time_sig = prog.get("time_sig", [4, 4])
+        bar_len  = float(time_sig[0])  # beats per bar
+
+        # Total bars (approximate)
+        total_dur  = sum(c["duration"] for c in chords)
+        total_bars = max(total_dur / bar_len, 1.0)
+        density    = round(len(chords) / total_bars, 2)
+
+        synco = syncopation_score(chords, bar_len)
+        feel  = feel_label(synco)
+
+        # Build absolute pattern (onset/duration per chord slot)
+        pattern = [{"onset": round(c["onset"], 3),
+                    "duration": round(c["duration"], 3)} for c in chords]
+
+        key = pattern_key(chords)
+        if key not in seen:
+            seen[key] = {
+                "feel":    feel,
+                "density": density,
+                "pattern": pattern,
+                "count":   1,
+                "source":  prog["name"],
+            }
+        else:
+            seen[key]["count"] += 1
+
+    groove_pool = sorted(seen.values(), key=lambda g: (g["feel"], g["density"]))
+
+    # Build groups in fixed order
+    FEEL_ORDER = ["Straight", "Moderate", "Syncopated"]
+    groups_map: dict[str, list[int]] = {f: [] for f in FEEL_ORDER}
+    for i, g in enumerate(groove_pool):
+        feel = g["feel"]
+        if feel in groups_map:
+            groups_map[feel].append(i + 1)  # 1-based for Lua
+
+    groove_groups = []
+    for feel in FEEL_ORDER:
+        indices = groups_map[feel]
+        if indices:
+            groove_groups.append({"feel": feel, "indices": indices})
+
+    return groove_pool, groove_groups
+
+
 # ─── Build chord pool ────────────────────────────────────────────────────────
 
 def build_chord_pool(progressions: list[dict]) -> list[dict]:
@@ -268,12 +355,15 @@ def lua_value(v, indent=0) -> str:
     return str(v)
 
 
-def write_lua(progressions: list[dict], chord_pool: list[dict], out_path: Path):
+def write_lua(progressions: list[dict], chord_pool: list[dict],
+              groove_pool: list[dict], groove_groups: list[dict],
+              out_path: Path):
     lines = []
     lines.append("-- Neo Chords 2 — Chord Database")
     lines.append("-- Generated from: lee chords neo soul vol 1")
     lines.append(f"-- Total progressions: {len(progressions)}")
     lines.append(f"-- Total unique chords: {len(chord_pool)}")
+    lines.append(f"-- Total unique grooves: {len(groove_pool)}")
     lines.append("")
     lines.append("CHORD_DB = {")
     lines.append("  version = 1,")
@@ -308,6 +398,28 @@ def write_lua(progressions: list[dict], chord_pool: list[dict], out_path: Path):
         )
     lines.append("  },")
     lines.append("")
+
+    # Groove pool
+    lines.append("  groove_pool = {")
+    for g in groove_pool:
+        pattern_str = "{" + ", ".join(
+            f"{{onset = {s['onset']}, duration = {s['duration']}}}"
+            for s in g["pattern"]
+        ) + "}"
+        lines.append(
+            f'    {{feel = "{g["feel"]}", density = {g["density"]}, '
+            f'count = {g["count"]}, pattern = {pattern_str}}},')
+    lines.append("  },")
+    lines.append("")
+
+    # Groove groups
+    lines.append("  groove_groups = {")
+    for grp in groove_groups:
+        idx_str = "{" + ", ".join(str(i) for i in grp["indices"]) + "}"
+        lines.append(f'    {{feel = "{grp["feel"]}", indices = {idx_str}}},')
+    lines.append("  },")
+    lines.append("")
+
     lines.append("}")
     lines.append("")
     lines.append("return CHORD_DB")
@@ -336,12 +448,18 @@ def main():
     chord_pool = build_chord_pool(progressions)
     print(f"Unique chord voicings in pool: {len(chord_pool)}")
 
-    write_lua(progressions, chord_pool, OUTPUT_LUA)
+    groove_pool, groove_groups = build_groove_pool(progressions)
+    print(f"Unique groove patterns: {len(groove_pool)}")
+    for grp in groove_groups:
+        print(f"  {grp['feel']}: {len(grp['indices'])} patterns")
+
+    write_lua(progressions, chord_pool, groove_pool, groove_groups, OUTPUT_LUA)
 
     # Also write a JSON summary for inspection
     json_path = OUTPUT_LUA.with_suffix(".json")
     with open(json_path, "w") as f:
-        json.dump({"progressions": progressions, "chord_pool": chord_pool}, f, indent=2)
+        json.dump({"progressions": progressions, "chord_pool": chord_pool,
+                   "groove_pool": groove_pool, "groove_groups": groove_groups}, f, indent=2)
     print(f"Wrote: {json_path}")
 
 
