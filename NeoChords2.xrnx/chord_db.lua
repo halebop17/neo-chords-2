@@ -1,5 +1,4 @@
 -- Neo Chords 2 — Chord Database
--- Generated from: lee chords neo soul vol 1
 -- Total progressions: 100
 -- Total unique chords: 81
 -- Total unique grooves: 1
@@ -8,9 +7,9 @@ CHORD_DB = {
   version = 1,
 
   progressions = {
-    -- [1] lee_chords_neo_soul_vol_1_001
+    -- [1] chords-neo-soul-a-001
     {
-      name = "lee_chords_neo_soul_vol_1_001",
+      name = "chords-neo-soul-a-001",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -24,9 +23,9 @@ CHORD_DB = {
         {notes = {52, 56, 59, 63, 66}, onset = 14.0, duration = 2.0, label = "Emaj9"},
       },
     },
-    -- [2] lee_chords_neo_soul_vol_1_002
+    -- [2] chords-neo-soul-a-002
     {
-      name = "lee_chords_neo_soul_vol_1_002",
+      name = "chords-neo-soul-a-002",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -40,9 +39,9 @@ CHORD_DB = {
         {notes = {51, 55, 58, 62, 69}, onset = 14.0, duration = 2.0, label = "Ebmaj7#11"},
       },
     },
-    -- [3] lee_chords_neo_soul_vol_1_003
+    -- [3] chords-neo-soul-a-003
     {
-      name = "lee_chords_neo_soul_vol_1_003",
+      name = "chords-neo-soul-a-003",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -56,9 +55,9 @@ CHORD_DB = {
         {notes = {48, 53, 55, 58, 62}, onset = 14.0, duration = 2.0, label = "Cm11(no3)"},
       },
     },
-    -- [4] lee_chords_neo_soul_vol_1_004
+    -- [4] chords-neo-soul-a-004
     {
-      name = "lee_chords_neo_soul_vol_1_004",
+      name = "chords-neo-soul-a-004",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -72,9 +71,9 @@ CHORD_DB = {
         {notes = {55, 58, 62, 65, 72}, onset = 14.0, duration = 2.0, label = "Cm11(no3)"},
       },
     },
-    -- [5] lee_chords_neo_soul_vol_1_005
+    -- [5] chords-neo-soul-a-005
     {
-      name = "lee_chords_neo_soul_vol_1_005",
+      name = "chords-neo-soul-a-005",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -88,9 +87,9 @@ CHORD_DB = {
         {notes = {55, 58, 62, 65, 69}, onset = 14.0, duration = 2.0, label = "Gm9"},
       },
     },
-    -- [6] lee_chords_neo_soul_vol_1_006
+    -- [6] chords-neo-soul-a-006
     {
-      name = "lee_chords_neo_soul_vol_1_006",
+      name = "chords-neo-soul-a-006",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -104,9 +103,9 @@ CHORD_DB = {
         {notes = {58, 61, 65, 68, 72}, onset = 14.0, duration = 2.0, label = "Bbm9"},
       },
     },
-    -- [7] lee_chords_neo_soul_vol_1_007
+    -- [7] chords-neo-soul-a-007
     {
-      name = "lee_chords_neo_soul_vol_1_007",
+      name = "chords-neo-soul-a-007",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -120,9 +119,9 @@ CHORD_DB = {
         {notes = {56, 60, 63, 67, 70}, onset = 14.0, duration = 2.0, label = "Abmaj9"},
       },
     },
-    -- [8] lee_chords_neo_soul_vol_1_008
+    -- [8] chords-neo-soul-a-008
     {
-      name = "lee_chords_neo_soul_vol_1_008",
+      name = "chords-neo-soul-a-008",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -136,9 +135,9 @@ CHORD_DB = {
         {notes = {53, 56, 60, 63, 70}, onset = 14.0, duration = 2.0, label = "Fm11(no9)"},
       },
     },
-    -- [9] lee_chords_neo_soul_vol_1_009
+    -- [9] chords-neo-soul-a-009
     {
-      name = "lee_chords_neo_soul_vol_1_009",
+      name = "chords-neo-soul-a-009",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -152,9 +151,9 @@ CHORD_DB = {
         {notes = {55, 59, 62, 66, 69}, onset = 14.0, duration = 2.0, label = "Gmaj9"},
       },
     },
-    -- [10] lee_chords_neo_soul_vol_1_010
+    -- [10] chords-neo-soul-a-010
     {
-      name = "lee_chords_neo_soul_vol_1_010",
+      name = "chords-neo-soul-a-010",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -168,9 +167,9 @@ CHORD_DB = {
         {notes = {56, 59, 63, 66, 70}, onset = 14.0, duration = 2.0, label = "Abm9"},
       },
     },
-    -- [11] lee_chords_neo_soul_vol_1_011
+    -- [11] chords-neo-soul-a-011
     {
-      name = "lee_chords_neo_soul_vol_1_011",
+      name = "chords-neo-soul-a-011",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -184,9 +183,9 @@ CHORD_DB = {
         {notes = {52, 56, 59, 63, 66}, onset = 14.0, duration = 2.0, label = "Emaj9"},
       },
     },
-    -- [12] lee_chords_neo_soul_vol_1_012
+    -- [12] chords-neo-soul-a-012
     {
-      name = "lee_chords_neo_soul_vol_1_012",
+      name = "chords-neo-soul-a-012",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -200,9 +199,9 @@ CHORD_DB = {
         {notes = {59, 63, 66, 70, 77}, onset = 14.0, duration = 2.0, label = "Bmaj7#11"},
       },
     },
-    -- [13] lee_chords_neo_soul_vol_1_013
+    -- [13] chords-neo-soul-a-013
     {
-      name = "lee_chords_neo_soul_vol_1_013",
+      name = "chords-neo-soul-a-013",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -216,9 +215,9 @@ CHORD_DB = {
         {notes = {48, 51, 55, 58, 65}, onset = 14.0, duration = 2.0, label = "Cm11(no9)"},
       },
     },
-    -- [14] lee_chords_neo_soul_vol_1_014
+    -- [14] chords-neo-soul-a-014
     {
-      name = "lee_chords_neo_soul_vol_1_014",
+      name = "chords-neo-soul-a-014",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -232,9 +231,9 @@ CHORD_DB = {
         {notes = {52, 56, 59, 63, 70}, onset = 14.0, duration = 2.0, label = "Emaj7#11"},
       },
     },
-    -- [15] lee_chords_neo_soul_vol_1_015
+    -- [15] chords-neo-soul-a-015
     {
-      name = "lee_chords_neo_soul_vol_1_015",
+      name = "chords-neo-soul-a-015",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -248,9 +247,9 @@ CHORD_DB = {
         {notes = {48, 51, 55, 58, 62}, onset = 14.0, duration = 2.0, label = "Cm9"},
       },
     },
-    -- [16] lee_chords_neo_soul_vol_1_016
+    -- [16] chords-neo-soul-a-016
     {
-      name = "lee_chords_neo_soul_vol_1_016",
+      name = "chords-neo-soul-a-016",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -264,9 +263,9 @@ CHORD_DB = {
         {notes = {55, 59, 62, 66, 69}, onset = 14.0, duration = 2.0, label = "Gmaj9"},
       },
     },
-    -- [17] lee_chords_neo_soul_vol_1_017
+    -- [17] chords-neo-soul-a-017
     {
-      name = "lee_chords_neo_soul_vol_1_017",
+      name = "chords-neo-soul-a-017",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -280,9 +279,9 @@ CHORD_DB = {
         {notes = {53, 58, 60, 63, 67}, onset = 14.0, duration = 2.0, label = "Cm11(no9)"},
       },
     },
-    -- [18] lee_chords_neo_soul_vol_1_018
+    -- [18] chords-neo-soul-a-018
     {
-      name = "lee_chords_neo_soul_vol_1_018",
+      name = "chords-neo-soul-a-018",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -296,9 +295,9 @@ CHORD_DB = {
         {notes = {49, 53, 56, 60, 63}, onset = 14.0, duration = 2.0, label = "C#maj9"},
       },
     },
-    -- [19] lee_chords_neo_soul_vol_1_019
+    -- [19] chords-neo-soul-a-019
     {
-      name = "lee_chords_neo_soul_vol_1_019",
+      name = "chords-neo-soul-a-019",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -312,9 +311,9 @@ CHORD_DB = {
         {notes = {51, 56, 58, 61, 72}, onset = 14.0, duration = 2.0, label = "Eb?"},
       },
     },
-    -- [20] lee_chords_neo_soul_vol_1_020
+    -- [20] chords-neo-soul-a-020
     {
-      name = "lee_chords_neo_soul_vol_1_020",
+      name = "chords-neo-soul-a-020",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -328,9 +327,9 @@ CHORD_DB = {
         {notes = {48, 51, 55, 58, 62}, onset = 14.0, duration = 2.0, label = "Cm9"},
       },
     },
-    -- [21] lee_chords_neo_soul_vol_1_021
+    -- [21] chords-neo-soul-a-021
     {
-      name = "lee_chords_neo_soul_vol_1_021",
+      name = "chords-neo-soul-a-021",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -344,9 +343,9 @@ CHORD_DB = {
         {notes = {48, 52, 55, 59, 62}, onset = 14.0, duration = 2.0, label = "Cmaj9"},
       },
     },
-    -- [22] lee_chords_neo_soul_vol_1_022
+    -- [22] chords-neo-soul-a-022
     {
-      name = "lee_chords_neo_soul_vol_1_022",
+      name = "chords-neo-soul-a-022",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -360,9 +359,9 @@ CHORD_DB = {
         {notes = {55, 58, 62, 65, 69}, onset = 14.0, duration = 2.0, label = "Gm9"},
       },
     },
-    -- [23] lee_chords_neo_soul_vol_1_023
+    -- [23] chords-neo-soul-a-023
     {
-      name = "lee_chords_neo_soul_vol_1_023",
+      name = "chords-neo-soul-a-023",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -376,9 +375,9 @@ CHORD_DB = {
         {notes = {48, 53, 55, 58, 62}, onset = 14.0, duration = 2.0, label = "Cm11(no3)"},
       },
     },
-    -- [24] lee_chords_neo_soul_vol_1_024
+    -- [24] chords-neo-soul-a-024
     {
-      name = "lee_chords_neo_soul_vol_1_024",
+      name = "chords-neo-soul-a-024",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -392,9 +391,9 @@ CHORD_DB = {
         {notes = {51, 56, 58, 61, 65}, onset = 14.0, duration = 2.0, label = "C#6/9"},
       },
     },
-    -- [25] lee_chords_neo_soul_vol_1_025
+    -- [25] chords-neo-soul-a-025
     {
-      name = "lee_chords_neo_soul_vol_1_025",
+      name = "chords-neo-soul-a-025",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -408,9 +407,9 @@ CHORD_DB = {
         {notes = {55, 60, 62, 65, 69}, onset = 14.0, duration = 2.0, label = "Dm11(no9)"},
       },
     },
-    -- [26] lee_chords_neo_soul_vol_1_026
+    -- [26] chords-neo-soul-a-026
     {
-      name = "lee_chords_neo_soul_vol_1_026",
+      name = "chords-neo-soul-a-026",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -424,9 +423,9 @@ CHORD_DB = {
         {notes = {51, 55, 58, 62, 65}, onset = 14.0, duration = 2.0, label = "Ebmaj9"},
       },
     },
-    -- [27] lee_chords_neo_soul_vol_1_027
+    -- [27] chords-neo-soul-a-027
     {
-      name = "lee_chords_neo_soul_vol_1_027",
+      name = "chords-neo-soul-a-027",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -440,9 +439,9 @@ CHORD_DB = {
         {notes = {53, 56, 60, 63, 67}, onset = 14.0, duration = 2.0, label = "Fm9"},
       },
     },
-    -- [28] lee_chords_neo_soul_vol_1_028
+    -- [28] chords-neo-soul-a-028
     {
-      name = "lee_chords_neo_soul_vol_1_028",
+      name = "chords-neo-soul-a-028",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -456,9 +455,9 @@ CHORD_DB = {
         {notes = {48, 53, 55, 58, 62}, onset = 14.0, duration = 2.0, label = "Cm11(no3)"},
       },
     },
-    -- [29] lee_chords_neo_soul_vol_1_029
+    -- [29] chords-neo-soul-a-029
     {
-      name = "lee_chords_neo_soul_vol_1_029",
+      name = "chords-neo-soul-a-029",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -472,9 +471,9 @@ CHORD_DB = {
         {notes = {57, 61, 64, 68, 71}, onset = 14.0, duration = 2.0, label = "Amaj9"},
       },
     },
-    -- [30] lee_chords_neo_soul_vol_1_030
+    -- [30] chords-neo-soul-a-030
     {
-      name = "lee_chords_neo_soul_vol_1_030",
+      name = "chords-neo-soul-a-030",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -488,9 +487,9 @@ CHORD_DB = {
         {notes = {55, 59, 62, 66, 76}, onset = 14.0, duration = 2.0, label = "Em9"},
       },
     },
-    -- [31] lee_chords_neo_soul_vol_1_031
+    -- [31] chords-neo-soul-a-031
     {
-      name = "lee_chords_neo_soul_vol_1_031",
+      name = "chords-neo-soul-a-031",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -504,9 +503,9 @@ CHORD_DB = {
         {notes = {54, 57, 61, 64, 68}, onset = 14.0, duration = 2.0, label = "F#m9"},
       },
     },
-    -- [32] lee_chords_neo_soul_vol_1_032
+    -- [32] chords-neo-soul-a-032
     {
-      name = "lee_chords_neo_soul_vol_1_032",
+      name = "chords-neo-soul-a-032",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -520,9 +519,9 @@ CHORD_DB = {
         {notes = {52, 55, 59, 62, 66}, onset = 14.0, duration = 2.0, label = "Em9"},
       },
     },
-    -- [33] lee_chords_neo_soul_vol_1_033
+    -- [33] chords-neo-soul-a-033
     {
-      name = "lee_chords_neo_soul_vol_1_033",
+      name = "chords-neo-soul-a-033",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -536,9 +535,9 @@ CHORD_DB = {
         {notes = {58, 63, 65, 68, 79}, onset = 14.0, duration = 2.0, label = "Bb?"},
       },
     },
-    -- [34] lee_chords_neo_soul_vol_1_034
+    -- [34] chords-neo-soul-a-034
     {
-      name = "lee_chords_neo_soul_vol_1_034",
+      name = "chords-neo-soul-a-034",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -552,9 +551,9 @@ CHORD_DB = {
         {notes = {52, 57, 59, 62, 73}, onset = 14.0, duration = 2.0, label = "E?"},
       },
     },
-    -- [35] lee_chords_neo_soul_vol_1_035
+    -- [35] chords-neo-soul-a-035
     {
-      name = "lee_chords_neo_soul_vol_1_035",
+      name = "chords-neo-soul-a-035",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -568,9 +567,9 @@ CHORD_DB = {
         {notes = {56, 61, 63, 66, 70}, onset = 14.0, duration = 2.0, label = "Ebm11(no9)"},
       },
     },
-    -- [36] lee_chords_neo_soul_vol_1_036
+    -- [36] chords-neo-soul-a-036
     {
-      name = "lee_chords_neo_soul_vol_1_036",
+      name = "chords-neo-soul-a-036",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -584,9 +583,9 @@ CHORD_DB = {
         {notes = {59, 63, 66, 70, 73}, onset = 14.0, duration = 2.0, label = "Bmaj9"},
       },
     },
-    -- [37] lee_chords_neo_soul_vol_1_037
+    -- [37] chords-neo-soul-a-037
     {
-      name = "lee_chords_neo_soul_vol_1_037",
+      name = "chords-neo-soul-a-037",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -600,9 +599,9 @@ CHORD_DB = {
         {notes = {54, 59, 61, 64, 75}, onset = 14.0, duration = 2.0, label = "F#?"},
       },
     },
-    -- [38] lee_chords_neo_soul_vol_1_038
+    -- [38] chords-neo-soul-a-038
     {
-      name = "lee_chords_neo_soul_vol_1_038",
+      name = "chords-neo-soul-a-038",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -616,9 +615,9 @@ CHORD_DB = {
         {notes = {50, 54, 57, 61, 64}, onset = 14.0, duration = 2.0, label = "Dmaj9"},
       },
     },
-    -- [39] lee_chords_neo_soul_vol_1_039
+    -- [39] chords-neo-soul-a-039
     {
-      name = "lee_chords_neo_soul_vol_1_039",
+      name = "chords-neo-soul-a-039",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -632,9 +631,9 @@ CHORD_DB = {
         {notes = {55, 59, 62, 66, 73}, onset = 14.0, duration = 2.0, label = "Gmaj7#11"},
       },
     },
-    -- [40] lee_chords_neo_soul_vol_1_040
+    -- [40] chords-neo-soul-a-040
     {
-      name = "lee_chords_neo_soul_vol_1_040",
+      name = "chords-neo-soul-a-040",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -648,9 +647,9 @@ CHORD_DB = {
         {notes = {59, 63, 66, 70, 77}, onset = 14.0, duration = 2.0, label = "Bmaj7#11"},
       },
     },
-    -- [41] lee_chords_neo_soul_vol_1_041
+    -- [41] chords-neo-soul-a-041
     {
-      name = "lee_chords_neo_soul_vol_1_041",
+      name = "chords-neo-soul-a-041",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -664,9 +663,9 @@ CHORD_DB = {
         {notes = {56, 61, 63, 66, 70}, onset = 14.0, duration = 2.0, label = "Ebm11(no9)"},
       },
     },
-    -- [42] lee_chords_neo_soul_vol_1_042
+    -- [42] chords-neo-soul-a-042
     {
-      name = "lee_chords_neo_soul_vol_1_042",
+      name = "chords-neo-soul-a-042",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -680,9 +679,9 @@ CHORD_DB = {
         {notes = {49, 53, 56, 60, 63}, onset = 14.0, duration = 2.0, label = "C#maj9"},
       },
     },
-    -- [43] lee_chords_neo_soul_vol_1_043
+    -- [43] chords-neo-soul-a-043
     {
-      name = "lee_chords_neo_soul_vol_1_043",
+      name = "chords-neo-soul-a-043",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -696,9 +695,9 @@ CHORD_DB = {
         {notes = {56, 60, 63, 67, 74}, onset = 14.0, duration = 2.0, label = "Abmaj7#11"},
       },
     },
-    -- [44] lee_chords_neo_soul_vol_1_044
+    -- [44] chords-neo-soul-a-044
     {
-      name = "lee_chords_neo_soul_vol_1_044",
+      name = "chords-neo-soul-a-044",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -712,9 +711,9 @@ CHORD_DB = {
         {notes = {58, 63, 65, 68, 72}, onset = 14.0, duration = 2.0, label = "Fm11(no9)"},
       },
     },
-    -- [45] lee_chords_neo_soul_vol_1_045
+    -- [45] chords-neo-soul-a-045
     {
-      name = "lee_chords_neo_soul_vol_1_045",
+      name = "chords-neo-soul-a-045",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -728,9 +727,9 @@ CHORD_DB = {
         {notes = {57, 60, 64, 67, 71}, onset = 14.0, duration = 2.0, label = "Am9"},
       },
     },
-    -- [46] lee_chords_neo_soul_vol_1_046
+    -- [46] chords-neo-soul-a-046
     {
-      name = "lee_chords_neo_soul_vol_1_046",
+      name = "chords-neo-soul-a-046",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -744,9 +743,9 @@ CHORD_DB = {
         {notes = {59, 63, 66, 70, 73}, onset = 14.0, duration = 2.0, label = "Bmaj9"},
       },
     },
-    -- [47] lee_chords_neo_soul_vol_1_047
+    -- [47] chords-neo-soul-a-047
     {
-      name = "lee_chords_neo_soul_vol_1_047",
+      name = "chords-neo-soul-a-047",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -760,9 +759,9 @@ CHORD_DB = {
         {notes = {54, 57, 61, 64, 68}, onset = 14.0, duration = 2.0, label = "F#m9"},
       },
     },
-    -- [48] lee_chords_neo_soul_vol_1_048
+    -- [48] chords-neo-soul-a-048
     {
-      name = "lee_chords_neo_soul_vol_1_048",
+      name = "chords-neo-soul-a-048",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -776,9 +775,9 @@ CHORD_DB = {
         {notes = {56, 61, 63, 66, 70}, onset = 14.0, duration = 2.0, label = "Ebm11(no9)"},
       },
     },
-    -- [49] lee_chords_neo_soul_vol_1_049
+    -- [49] chords-neo-soul-a-049
     {
-      name = "lee_chords_neo_soul_vol_1_049",
+      name = "chords-neo-soul-a-049",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -792,9 +791,9 @@ CHORD_DB = {
         {notes = {57, 60, 64, 67, 74}, onset = 14.0, duration = 2.0, label = "C6/9"},
       },
     },
-    -- [50] lee_chords_neo_soul_vol_1_050
+    -- [50] chords-neo-soul-a-050
     {
-      name = "lee_chords_neo_soul_vol_1_050",
+      name = "chords-neo-soul-a-050",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -808,9 +807,9 @@ CHORD_DB = {
         {notes = {54, 58, 61, 65, 68}, onset = 14.0, duration = 2.0, label = "F#maj9"},
       },
     },
-    -- [51] lee_chords_neo_soul_vol_1_051
+    -- [51] chords-neo-soul-a-051
     {
-      name = "lee_chords_neo_soul_vol_1_051",
+      name = "chords-neo-soul-a-051",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -824,9 +823,9 @@ CHORD_DB = {
         {notes = {48, 52, 55, 59, 62}, onset = 14.0, duration = 2.0, label = "Cmaj9"},
       },
     },
-    -- [52] lee_chords_neo_soul_vol_1_052
+    -- [52] chords-neo-soul-a-052
     {
-      name = "lee_chords_neo_soul_vol_1_052",
+      name = "chords-neo-soul-a-052",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -840,9 +839,9 @@ CHORD_DB = {
         {notes = {48, 51, 55, 58, 62}, onset = 14.0, duration = 2.0, label = "Cm9"},
       },
     },
-    -- [53] lee_chords_neo_soul_vol_1_053
+    -- [53] chords-neo-soul-a-053
     {
-      name = "lee_chords_neo_soul_vol_1_053",
+      name = "chords-neo-soul-a-053",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -856,9 +855,9 @@ CHORD_DB = {
         {notes = {56, 60, 63, 67, 70}, onset = 14.0, duration = 2.0, label = "Abmaj9"},
       },
     },
-    -- [54] lee_chords_neo_soul_vol_1_054
+    -- [54] chords-neo-soul-a-054
     {
-      name = "lee_chords_neo_soul_vol_1_054",
+      name = "chords-neo-soul-a-054",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -872,9 +871,9 @@ CHORD_DB = {
         {notes = {56, 61, 63, 66, 77}, onset = 14.0, duration = 2.0, label = "Ab?"},
       },
     },
-    -- [55] lee_chords_neo_soul_vol_1_055
+    -- [55] chords-neo-soul-a-055
     {
-      name = "lee_chords_neo_soul_vol_1_055",
+      name = "chords-neo-soul-a-055",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -888,9 +887,9 @@ CHORD_DB = {
         {notes = {49, 52, 56, 59, 66}, onset = 14.0, duration = 2.0, label = "C#m11(no9)"},
       },
     },
-    -- [56] lee_chords_neo_soul_vol_1_056
+    -- [56] chords-neo-soul-a-056
     {
-      name = "lee_chords_neo_soul_vol_1_056",
+      name = "chords-neo-soul-a-056",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -904,9 +903,9 @@ CHORD_DB = {
         {notes = {57, 60, 64, 67, 71}, onset = 14.0, duration = 2.0, label = "Am9"},
       },
     },
-    -- [57] lee_chords_neo_soul_vol_1_057
+    -- [57] chords-neo-soul-a-057
     {
-      name = "lee_chords_neo_soul_vol_1_057",
+      name = "chords-neo-soul-a-057",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -920,9 +919,9 @@ CHORD_DB = {
         {notes = {49, 54, 56, 59, 63}, onset = 14.0, duration = 2.0, label = "C#m11(no3)"},
       },
     },
-    -- [58] lee_chords_neo_soul_vol_1_058
+    -- [58] chords-neo-soul-a-058
     {
-      name = "lee_chords_neo_soul_vol_1_058",
+      name = "chords-neo-soul-a-058",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -936,9 +935,9 @@ CHORD_DB = {
         {notes = {49, 54, 56, 59, 63}, onset = 14.0, duration = 2.0, label = "C#m11(no3)"},
       },
     },
-    -- [59] lee_chords_neo_soul_vol_1_059
+    -- [59] chords-neo-soul-a-059
     {
-      name = "lee_chords_neo_soul_vol_1_059",
+      name = "chords-neo-soul-a-059",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -952,9 +951,9 @@ CHORD_DB = {
         {notes = {51, 54, 58, 61, 65}, onset = 14.0, duration = 2.0, label = "Ebm9"},
       },
     },
-    -- [60] lee_chords_neo_soul_vol_1_060
+    -- [60] chords-neo-soul-a-060
     {
-      name = "lee_chords_neo_soul_vol_1_060",
+      name = "chords-neo-soul-a-060",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -968,9 +967,9 @@ CHORD_DB = {
         {notes = {48, 52, 55, 59, 62}, onset = 14.0, duration = 2.0, label = "Cmaj9"},
       },
     },
-    -- [61] lee_chords_neo_soul_vol_1_061
+    -- [61] chords-neo-soul-a-061
     {
-      name = "lee_chords_neo_soul_vol_1_061",
+      name = "chords-neo-soul-a-061",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -984,9 +983,9 @@ CHORD_DB = {
         {notes = {49, 52, 56, 59, 63}, onset = 14.0, duration = 2.0, label = "C#m9"},
       },
     },
-    -- [62] lee_chords_neo_soul_vol_1_062
+    -- [62] chords-neo-soul-a-062
     {
-      name = "lee_chords_neo_soul_vol_1_062",
+      name = "chords-neo-soul-a-062",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -1000,9 +999,9 @@ CHORD_DB = {
         {notes = {58, 62, 65, 69, 72}, onset = 14.0, duration = 2.0, label = "Bbmaj9"},
       },
     },
-    -- [63] lee_chords_neo_soul_vol_1_063
+    -- [63] chords-neo-soul-a-063
     {
-      name = "lee_chords_neo_soul_vol_1_063",
+      name = "chords-neo-soul-a-063",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -1016,9 +1015,9 @@ CHORD_DB = {
         {notes = {48, 51, 55, 58, 65}, onset = 14.0, duration = 2.0, label = "Cm11(no9)"},
       },
     },
-    -- [64] lee_chords_neo_soul_vol_1_064
+    -- [64] chords-neo-soul-a-064
     {
-      name = "lee_chords_neo_soul_vol_1_064",
+      name = "chords-neo-soul-a-064",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -1032,9 +1031,9 @@ CHORD_DB = {
         {notes = {56, 60, 63, 67, 74}, onset = 14.0, duration = 2.0, label = "Abmaj7#11"},
       },
     },
-    -- [65] lee_chords_neo_soul_vol_1_065
+    -- [65] chords-neo-soul-a-065
     {
-      name = "lee_chords_neo_soul_vol_1_065",
+      name = "chords-neo-soul-a-065",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -1048,9 +1047,9 @@ CHORD_DB = {
         {notes = {52, 55, 59, 62, 69}, onset = 14.0, duration = 2.0, label = "Em11(no9)"},
       },
     },
-    -- [66] lee_chords_neo_soul_vol_1_066
+    -- [66] chords-neo-soul-a-066
     {
-      name = "lee_chords_neo_soul_vol_1_066",
+      name = "chords-neo-soul-a-066",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -1064,9 +1063,9 @@ CHORD_DB = {
         {notes = {50, 54, 57, 61, 64}, onset = 14.0, duration = 2.0, label = "Dmaj9"},
       },
     },
-    -- [67] lee_chords_neo_soul_vol_1_067
+    -- [67] chords-neo-soul-a-067
     {
-      name = "lee_chords_neo_soul_vol_1_067",
+      name = "chords-neo-soul-a-067",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -1080,9 +1079,9 @@ CHORD_DB = {
         {notes = {57, 61, 64, 68, 71}, onset = 14.0, duration = 2.0, label = "Amaj9"},
       },
     },
-    -- [68] lee_chords_neo_soul_vol_1_068
+    -- [68] chords-neo-soul-a-068
     {
-      name = "lee_chords_neo_soul_vol_1_068",
+      name = "chords-neo-soul-a-068",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -1096,9 +1095,9 @@ CHORD_DB = {
         {notes = {51, 54, 58, 61, 65}, onset = 14.0, duration = 2.0, label = "Ebm9"},
       },
     },
-    -- [69] lee_chords_neo_soul_vol_1_069
+    -- [69] chords-neo-soul-a-069
     {
-      name = "lee_chords_neo_soul_vol_1_069",
+      name = "chords-neo-soul-a-069",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -1112,9 +1111,9 @@ CHORD_DB = {
         {notes = {49, 54, 56, 59, 63}, onset = 14.0, duration = 2.0, label = "C#m11(no3)"},
       },
     },
-    -- [70] lee_chords_neo_soul_vol_1_070
+    -- [70] chords-neo-soul-a-070
     {
-      name = "lee_chords_neo_soul_vol_1_070",
+      name = "chords-neo-soul-a-070",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -1128,9 +1127,9 @@ CHORD_DB = {
         {notes = {54, 57, 61, 64, 68}, onset = 14.0, duration = 2.0, label = "F#m9"},
       },
     },
-    -- [71] lee_chords_neo_soul_vol_1_071
+    -- [71] chords-neo-soul-a-071
     {
-      name = "lee_chords_neo_soul_vol_1_071",
+      name = "chords-neo-soul-a-071",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -1144,9 +1143,9 @@ CHORD_DB = {
         {notes = {55, 59, 62, 66, 69}, onset = 14.0, duration = 2.0, label = "Gmaj9"},
       },
     },
-    -- [72] lee_chords_neo_soul_vol_1_072
+    -- [72] chords-neo-soul-a-072
     {
-      name = "lee_chords_neo_soul_vol_1_072",
+      name = "chords-neo-soul-a-072",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -1160,9 +1159,9 @@ CHORD_DB = {
         {notes = {50, 55, 57, 60, 71}, onset = 14.0, duration = 2.0, label = "D?"},
       },
     },
-    -- [73] lee_chords_neo_soul_vol_1_073
+    -- [73] chords-neo-soul-a-073
     {
-      name = "lee_chords_neo_soul_vol_1_073",
+      name = "chords-neo-soul-a-073",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -1176,9 +1175,9 @@ CHORD_DB = {
         {notes = {53, 56, 60, 63, 67}, onset = 14.0, duration = 2.0, label = "Fm9"},
       },
     },
-    -- [74] lee_chords_neo_soul_vol_1_074
+    -- [74] chords-neo-soul-a-074
     {
-      name = "lee_chords_neo_soul_vol_1_074",
+      name = "chords-neo-soul-a-074",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -1192,9 +1191,9 @@ CHORD_DB = {
         {notes = {52, 57, 59, 62, 66}, onset = 14.0, duration = 2.0, label = "D6/9"},
       },
     },
-    -- [75] lee_chords_neo_soul_vol_1_075
+    -- [75] chords-neo-soul-a-075
     {
-      name = "lee_chords_neo_soul_vol_1_075",
+      name = "chords-neo-soul-a-075",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -1208,9 +1207,9 @@ CHORD_DB = {
         {notes = {54, 57, 61, 64, 68}, onset = 14.0, duration = 2.0, label = "F#m9"},
       },
     },
-    -- [76] lee_chords_neo_soul_vol_1_076
+    -- [76] chords-neo-soul-a-076
     {
-      name = "lee_chords_neo_soul_vol_1_076",
+      name = "chords-neo-soul-a-076",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -1224,9 +1223,9 @@ CHORD_DB = {
         {notes = {50, 53, 57, 60, 64}, onset = 14.0, duration = 2.0, label = "Dm9"},
       },
     },
-    -- [77] lee_chords_neo_soul_vol_1_077
+    -- [77] chords-neo-soul-a-077
     {
-      name = "lee_chords_neo_soul_vol_1_077",
+      name = "chords-neo-soul-a-077",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -1240,9 +1239,9 @@ CHORD_DB = {
         {notes = {53, 57, 60, 64, 67}, onset = 14.0, duration = 2.0, label = "Fmaj9"},
       },
     },
-    -- [78] lee_chords_neo_soul_vol_1_078
+    -- [78] chords-neo-soul-a-078
     {
-      name = "lee_chords_neo_soul_vol_1_078",
+      name = "chords-neo-soul-a-078",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -1256,9 +1255,9 @@ CHORD_DB = {
         {notes = {51, 56, 58, 61, 65}, onset = 14.0, duration = 2.0, label = "C#6/9"},
       },
     },
-    -- [79] lee_chords_neo_soul_vol_1_079
+    -- [79] chords-neo-soul-a-079
     {
-      name = "lee_chords_neo_soul_vol_1_079",
+      name = "chords-neo-soul-a-079",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -1272,9 +1271,9 @@ CHORD_DB = {
         {notes = {54, 57, 61, 64, 71}, onset = 14.0, duration = 2.0, label = "F#m11(no9)"},
       },
     },
-    -- [80] lee_chords_neo_soul_vol_1_080
+    -- [80] chords-neo-soul-a-080
     {
-      name = "lee_chords_neo_soul_vol_1_080",
+      name = "chords-neo-soul-a-080",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -1288,9 +1287,9 @@ CHORD_DB = {
         {notes = {49, 53, 56, 60, 63}, onset = 14.0, duration = 2.0, label = "C#maj9"},
       },
     },
-    -- [81] lee_chords_neo_soul_vol_1_081
+    -- [81] chords-neo-soul-a-081
     {
-      name = "lee_chords_neo_soul_vol_1_081",
+      name = "chords-neo-soul-a-081",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -1304,9 +1303,9 @@ CHORD_DB = {
         {notes = {57, 60, 64, 67, 71}, onset = 14.0, duration = 2.0, label = "Am9"},
       },
     },
-    -- [82] lee_chords_neo_soul_vol_1_082
+    -- [82] chords-neo-soul-a-082
     {
-      name = "lee_chords_neo_soul_vol_1_082",
+      name = "chords-neo-soul-a-082",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -1320,9 +1319,9 @@ CHORD_DB = {
         {notes = {51, 55, 58, 62, 69}, onset = 14.0, duration = 2.0, label = "Ebmaj7#11"},
       },
     },
-    -- [83] lee_chords_neo_soul_vol_1_083
+    -- [83] chords-neo-soul-a-083
     {
-      name = "lee_chords_neo_soul_vol_1_083",
+      name = "chords-neo-soul-a-083",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -1336,9 +1335,9 @@ CHORD_DB = {
         {notes = {52, 56, 59, 63, 66}, onset = 14.0, duration = 2.0, label = "Emaj9"},
       },
     },
-    -- [84] lee_chords_neo_soul_vol_1_084
+    -- [84] chords-neo-soul-a-084
     {
-      name = "lee_chords_neo_soul_vol_1_084",
+      name = "chords-neo-soul-a-084",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -1352,9 +1351,9 @@ CHORD_DB = {
         {notes = {53, 56, 60, 63, 67}, onset = 14.0, duration = 2.0, label = "Fm9"},
       },
     },
-    -- [85] lee_chords_neo_soul_vol_1_085
+    -- [85] chords-neo-soul-a-085
     {
-      name = "lee_chords_neo_soul_vol_1_085",
+      name = "chords-neo-soul-a-085",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -1368,9 +1367,9 @@ CHORD_DB = {
         {notes = {57, 62, 64, 67, 78}, onset = 14.0, duration = 2.0, label = "A?"},
       },
     },
-    -- [86] lee_chords_neo_soul_vol_1_086
+    -- [86] chords-neo-soul-a-086
     {
-      name = "lee_chords_neo_soul_vol_1_086",
+      name = "chords-neo-soul-a-086",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -1384,9 +1383,9 @@ CHORD_DB = {
         {notes = {51, 56, 58, 61, 65}, onset = 14.0, duration = 2.0, label = "C#6/9"},
       },
     },
-    -- [87] lee_chords_neo_soul_vol_1_087
+    -- [87] chords-neo-soul-a-087
     {
-      name = "lee_chords_neo_soul_vol_1_087",
+      name = "chords-neo-soul-a-087",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -1400,9 +1399,9 @@ CHORD_DB = {
         {notes = {54, 57, 61, 64, 68}, onset = 14.0, duration = 2.0, label = "F#m9"},
       },
     },
-    -- [88] lee_chords_neo_soul_vol_1_088
+    -- [88] chords-neo-soul-a-088
     {
-      name = "lee_chords_neo_soul_vol_1_088",
+      name = "chords-neo-soul-a-088",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -1416,9 +1415,9 @@ CHORD_DB = {
         {notes = {53, 57, 60, 64, 67}, onset = 14.0, duration = 2.0, label = "Fmaj9"},
       },
     },
-    -- [89] lee_chords_neo_soul_vol_1_089
+    -- [89] chords-neo-soul-a-089
     {
-      name = "lee_chords_neo_soul_vol_1_089",
+      name = "chords-neo-soul-a-089",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -1432,9 +1431,9 @@ CHORD_DB = {
         {notes = {53, 58, 60, 63, 67}, onset = 14.0, duration = 2.0, label = "Cm11(no9)"},
       },
     },
-    -- [90] lee_chords_neo_soul_vol_1_090
+    -- [90] chords-neo-soul-a-090
     {
-      name = "lee_chords_neo_soul_vol_1_090",
+      name = "chords-neo-soul-a-090",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -1448,9 +1447,9 @@ CHORD_DB = {
         {notes = {59, 64, 66, 69, 73}, onset = 14.0, duration = 2.0, label = "F#m11(no9)"},
       },
     },
-    -- [91] lee_chords_neo_soul_vol_1_091
+    -- [91] chords-neo-soul-a-091
     {
-      name = "lee_chords_neo_soul_vol_1_091",
+      name = "chords-neo-soul-a-091",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -1464,9 +1463,9 @@ CHORD_DB = {
         {notes = {59, 64, 66, 69, 73}, onset = 14.0, duration = 2.0, label = "F#m11(no9)"},
       },
     },
-    -- [92] lee_chords_neo_soul_vol_1_092
+    -- [92] chords-neo-soul-a-092
     {
-      name = "lee_chords_neo_soul_vol_1_092",
+      name = "chords-neo-soul-a-092",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -1480,9 +1479,9 @@ CHORD_DB = {
         {notes = {51, 54, 58, 61, 68}, onset = 14.0, duration = 2.0, label = "Ebm11(no9)"},
       },
     },
-    -- [93] lee_chords_neo_soul_vol_1_093
+    -- [93] chords-neo-soul-a-093
     {
-      name = "lee_chords_neo_soul_vol_1_093",
+      name = "chords-neo-soul-a-093",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -1496,9 +1495,9 @@ CHORD_DB = {
         {notes = {49, 53, 56, 60, 63}, onset = 14.0, duration = 2.0, label = "C#maj9"},
       },
     },
-    -- [94] lee_chords_neo_soul_vol_1_094
+    -- [94] chords-neo-soul-a-094
     {
-      name = "lee_chords_neo_soul_vol_1_094",
+      name = "chords-neo-soul-a-094",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -1512,9 +1511,9 @@ CHORD_DB = {
         {notes = {50, 53, 57, 60, 64}, onset = 14.0, duration = 2.0, label = "Dm9"},
       },
     },
-    -- [95] lee_chords_neo_soul_vol_1_095
+    -- [95] chords-neo-soul-a-095
     {
-      name = "lee_chords_neo_soul_vol_1_095",
+      name = "chords-neo-soul-a-095",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -1528,9 +1527,9 @@ CHORD_DB = {
         {notes = {53, 57, 60, 64, 67}, onset = 14.0, duration = 2.0, label = "Fmaj9"},
       },
     },
-    -- [96] lee_chords_neo_soul_vol_1_096
+    -- [96] chords-neo-soul-a-096
     {
-      name = "lee_chords_neo_soul_vol_1_096",
+      name = "chords-neo-soul-a-096",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -1544,9 +1543,9 @@ CHORD_DB = {
         {notes = {48, 53, 55, 58, 62}, onset = 14.0, duration = 2.0, label = "Cm11(no3)"},
       },
     },
-    -- [97] lee_chords_neo_soul_vol_1_097
+    -- [97] chords-neo-soul-a-097
     {
-      name = "lee_chords_neo_soul_vol_1_097",
+      name = "chords-neo-soul-a-097",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -1560,9 +1559,9 @@ CHORD_DB = {
         {notes = {49, 53, 56, 60, 63}, onset = 14.0, duration = 2.0, label = "C#maj9"},
       },
     },
-    -- [98] lee_chords_neo_soul_vol_1_098
+    -- [98] chords-neo-soul-a-098
     {
-      name = "lee_chords_neo_soul_vol_1_098",
+      name = "chords-neo-soul-a-098",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -1576,9 +1575,9 @@ CHORD_DB = {
         {notes = {57, 62, 64, 67, 71}, onset = 14.0, duration = 2.0, label = "Em11(no9)"},
       },
     },
-    -- [99] lee_chords_neo_soul_vol_1_099
+    -- [99] chords-neo-soul-a-099
     {
-      name = "lee_chords_neo_soul_vol_1_099",
+      name = "chords-neo-soul-a-099",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
@@ -1592,9 +1591,9 @@ CHORD_DB = {
         {notes = {50, 54, 57, 61, 64}, onset = 14.0, duration = 2.0, label = "Dmaj9"},
       },
     },
-    -- [100] lee_chords_neo_soul_vol_1_100
+    -- [100] chords-neo-soul-a-100
     {
-      name = "lee_chords_neo_soul_vol_1_100",
+      name = "chords-neo-soul-a-100",
       bpm = 120.0,
       time_sig = {4, 4},
       chords = {
