@@ -366,6 +366,7 @@ end
 
 -- Active timer handles for progression preview (one-shot chained timers)
 local _preview_timers = {}
+local _audition_btn_ref = nil  -- live reference to the audition button widget
 
 local function stop_chord_preview()
   local song = renoise.song()
@@ -399,6 +400,10 @@ local function stop_progression_preview()
   _preview_timers = {}
   stop_chord_preview()
   state.preview_active = false
+  if _audition_btn_ref then
+    _audition_btn_ref.text  = "▶ Audition"
+    _audition_btn_ref.color = {0, 0, 0}
+  end
 end
 
 local function play_progression_preview(chords)
@@ -677,6 +682,25 @@ local function show_dialog()
     width  = W - 20,
     height = 36,
   }
+  local audition_btn  -- forward declare
+  audition_btn = vb:button {
+    text     = state.preview_active and "■ Stop" or "▶ Audition",
+    notifier = function()
+      if state.preview_active then
+        stop_progression_preview()
+      else
+        if state.preview then
+          play_progression_preview(state.preview)
+          audition_btn.text  = "■ Stop"
+          audition_btn.color = {255, 100, 0}
+        end
+      end
+    end,
+  }
+  if state.preview_active then
+    audition_btn.color = {255, 100, 0}
+  end
+  _audition_btn_ref = audition_btn
   local status_text = vb:text { text = "", width = W - 20 }
 
   -- ── Browse section ────────────────────────────────────────────────────────
@@ -1027,21 +1051,28 @@ local function show_dialog()
     notifier = function(v) state.build_chord_dur = v end,
   }
 
-  local build_previewing = false  -- local toggle for preview button
-  local build_preview_btn = vb:button {
-    text  = "▶ Preview",
+  local build_preview_btn  -- forward declare
+  build_preview_btn = vb:button {
+    text  = "▶ Audition",
     width = 80,
     notifier = function()
       local pool = filtered_chord_pool(state.build_filter_root)
       local entry = pool[state.build_chord_idx]
       if not entry then return end
-      if build_previewing then
+      stop_chord_preview()
+      play_chord_preview(entry.notes)
+      build_preview_btn.text  = "■ Stop"
+      build_preview_btn.color = {255, 100, 0}
+      -- auto-stop after ~2 seconds
+      local function done_cb()
         stop_chord_preview()
-        build_previewing = false
-      else
-        play_chord_preview(entry.notes)
-        build_previewing = true
+        build_preview_btn.text  = "▶ Audition"
+        build_preview_btn.color = {0, 0, 0}
+        if renoise.tool():has_timer(done_cb) then
+          renoise.tool():remove_timer(done_cb)
+        end
       end
+      renoise.tool():add_timer(done_cb, 2000)
     end,
   }
 
@@ -1106,8 +1137,7 @@ local function show_dialog()
           beat = beat + item.duration
         end
         state.preview = chords
-        state.mode    = 1   -- jump to Browse/staged view to show result
-        show_dialog()
+        preview_text.text = chords_to_string(state.preview)
       end,
     },
   }
@@ -1174,18 +1204,7 @@ local function show_dialog()
 
     vb:space { height = 4 },
     vb:text { text = "STAGED PROGRESSION", font = "bold" },
-    vb:button {
-      text  = state.preview_active and "Stop" or "▶ Preview",
-      width = 80,
-      notifier = function()
-        if state.preview_active then
-          stop_progression_preview()
-          show_dialog()
-        elseif state.preview then
-          play_progression_preview(state.preview)
-        end
-      end,
-    },
+    audition_btn,
     preview_text,
     vb:text { text = "TRANSPOSE", font = "bold" },
     vb:row {
