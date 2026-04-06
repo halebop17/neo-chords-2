@@ -51,7 +51,7 @@ Once you have a progression staged, you set how it should be written into the ph
 
 ## Installation
 
-1. The tool folder is named `com.denis.NeoChords2.xrnx`.
+1. The tool folder is named `com.halebop.NeoChords2.xrnx`.
 2. Copy it to your Renoise tools folder:
    `~/Library/Preferences/Renoise/V3.5.4/Scripts/Tools/`
 3. In Renoise: **Tools → Reload All Tools** (or restart Renoise).

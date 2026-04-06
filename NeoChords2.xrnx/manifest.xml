@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <RenoiseScriptingTool doc_version="2">
   <Name>Neo Chords 2</Name>
-  <Id>com.denis.NeoChords2</Id>
+  <Id>com.halebop.NeoChords2</Id>
   <Description>Generate neo-soul chord progressions from a curated MIDI library. Browse 100 original progressions or randomize new ones. Write directly to instrument phrases.</Description>
   <Version>1.0</Version>
   <Author>Denis</Author>
