@@ -19,7 +19,10 @@ except ImportError:
 
 # ─── Configuration ───────────────────────────────────────────────────────────
 
-MIDI_FOLDER = Path(__file__).parent / "Files" / "neo soul vol 1"
+MIDI_SOURCES = [
+    (Path(__file__).parent / "Files" / "neo soul vol 1", "chords-neo-soul-a"),
+    (Path(__file__).parent / "Files" / "neo soul vol 2", "chords-neo-soul-b"),
+]
 OUTPUT_LUA  = Path(__file__).parent / "chord_db.lua"
 
 # Notes that start within this many ticks of each other are grouped as one chord.
@@ -360,7 +363,6 @@ def write_lua(progressions: list[dict], chord_pool: list[dict],
               out_path: Path):
     lines = []
     lines.append("-- Neo Chords 2 — Chord Database")
-    lines.append("-- Generated from: neo soul vol 1")
     lines.append(f"-- Total progressions: {len(progressions)}")
     lines.append(f"-- Total unique chords: {len(chord_pool)}")
     lines.append(f"-- Total unique grooves: {len(groove_pool)}")
@@ -432,33 +434,52 @@ def write_lua(progressions: list[dict], chord_pool: list[dict],
 # ─── Main ────────────────────────────────────────────────────────────────────
 
 def main():
-    mid_files = sorted(MIDI_FOLDER.glob("*.mid"))
-    print(f"Found {len(mid_files)} MIDI files in:\n  {MIDI_FOLDER}\n")
+    all_progressions = []
+    vol_chords: dict = {}  # prefix -> set of chord note tuples
 
-    progressions = []
-    for path in mid_files:
-        print(f"Parsing {path.name}...")
-        result = parse_midi_file(path)
-        if result:
-            print(f"  → {len(result['chords'])} chords, {result['bpm']} BPM")
-            progressions.append(result)
+    for folder, prefix in MIDI_SOURCES:
+        mid_files = sorted(folder.glob("*.mid"))
+        print(f"\nFound {len(mid_files)} MIDI files in:\n  {folder}\n")
 
-    print(f"\nSuccessfully parsed {len(progressions)} / {len(mid_files)} files")
+        progs = []
+        for i, path in enumerate(mid_files, 1):
+            print(f"Parsing {path.name}...")
+            result = parse_midi_file(path)
+            if result:
+                result["name"] = f"{prefix}-{i:03d}"
+                print(f"  → {len(result['chords'])} chords, {result['bpm']} BPM")
+                progs.append(result)
 
-    chord_pool = build_chord_pool(progressions)
-    print(f"Unique chord voicings in pool: {len(chord_pool)}")
+        print(f"Successfully parsed {len(progs)} / {len(mid_files)} files")
+        vol_chords[prefix] = {tuple(c["notes"]) for p in progs for c in p["chords"]}
+        all_progressions.extend(progs)
 
-    groove_pool, groove_groups = build_groove_pool(progressions)
+    # Cross-volume duplicate analysis
+    prefixes = list(vol_chords.keys())
+    if len(prefixes) >= 2:
+        v1 = vol_chords[prefixes[0]]
+        v2 = vol_chords[prefixes[1]]
+        shared    = v1 & v2
+        new_in_v2 = v2 - v1
+        print(f"\n--- Cross-volume analysis ---")
+        print(f"Vol 1 unique chord voicings : {len(v1)}")
+        print(f"Vol 2 unique chord voicings : {len(v2)}")
+        print(f"Shared (duplicate) voicings : {len(shared)}")
+        print(f"New voicings in Vol 2       : {len(new_in_v2)}")
+
+    chord_pool = build_chord_pool(all_progressions)
+    print(f"\nTotal merged chord pool     : {len(chord_pool)}")
+
+    groove_pool, groove_groups = build_groove_pool(all_progressions)
     print(f"Unique groove patterns: {len(groove_pool)}")
     for grp in groove_groups:
         print(f"  {grp['feel']}: {len(grp['indices'])} patterns")
 
-    write_lua(progressions, chord_pool, groove_pool, groove_groups, OUTPUT_LUA)
+    write_lua(all_progressions, chord_pool, groove_pool, groove_groups, OUTPUT_LUA)
 
-    # Also write a JSON summary for inspection
     json_path = OUTPUT_LUA.with_suffix(".json")
     with open(json_path, "w") as f:
-        json.dump({"progressions": progressions, "chord_pool": chord_pool,
+        json.dump({"progressions": all_progressions, "chord_pool": chord_pool,
                    "groove_pool": groove_pool, "groove_groups": groove_groups}, f, indent=2)
     print(f"Wrote: {json_path}")
 
