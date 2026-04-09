@@ -348,7 +348,7 @@ After writing, the progression **stays staged**. You can change Transpose, Human
 
 ## Under the Hood
 
-**Database:** Built by analysing 200 MIDI files from *Neo Soul Vol 1 & 2* using a Python script (`analyze_midi.py` + `mido`). The analysis extracts chord onsets, durations, notes, and labels. Output is baked into `chord_db.lua` and embedded in the tool.
+**Database:** Built by analysing MIDI files using a Python script (`analyze_midi.py` + `mido`). The analysis extracts chord onsets, durations, notes, and labels. Output is baked into `chord_db.lua` and embedded in the tool.
 
 - 100 progressions, each 8 chords  
 - 81 unique chord voicings in the pool  
